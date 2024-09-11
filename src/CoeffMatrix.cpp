@@ -1,7 +1,7 @@
 #include "CoeffMatrix.h"
 
-CoeffMatrix::CoeffMatrix(StructuredMesh& mesh):
-    mesh(mesh)
+CoeffMatrix::CoeffMatrix(StructuredMesh& mesh, Material& material):
+    mesh(mesh), material(material)
 {
     for (int i=0; i < ncy; i++){
         for (int j=0; j < ncx; j++){
@@ -16,6 +16,11 @@ CoeffMatrix::CoeffMatrix(StructuredMesh& mesh):
 }
 
 CoeffMatrix::~CoeffMatrix(){}
+
+void convCoeff()
+{
+    
+}
 
 void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy){
     for (int i=0; i<ncy; i++){
