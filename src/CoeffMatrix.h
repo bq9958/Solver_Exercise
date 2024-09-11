@@ -20,11 +20,11 @@ class CoeffMatrix {
 
         void DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy);
 
-        void convCoeff();
+        void convectionCoeff();
 
         inline std::array<std::array<COEFF,ncy>,ncy>getCoeff() {return this->Coeff;} 
     private:
-    std::array<std::array<COEFF,ncy>,ncy> Coeff;
+    std::array<std::array<COEFF,ncx>,ncy> Coeff;
     StructuredMesh& mesh;
     Material& material;
 };

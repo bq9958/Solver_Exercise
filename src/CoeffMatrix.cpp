@@ -17,9 +17,16 @@ CoeffMatrix::CoeffMatrix(StructuredMesh& mesh, Material& material):
 
 CoeffMatrix::~CoeffMatrix(){}
 
-void convCoeff()
+void CoeffMatrix::convectionCoeff()
 {
-    
+    // Central difference
+    boost::multi_array<fp,2> u = material.getU();
+    boost::multi_array<fp,2> rho = material.getrho();
+    for (int i=0; i<ncy, i++){
+        for (int j=0; j<ncx; j++){
+            Coeff[i][j].ae = 
+        }
+    }
 }
 
 void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy){

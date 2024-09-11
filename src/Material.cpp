@@ -3,9 +3,12 @@
 Material::Material(){
     this->k = conductivity;
     this->T.resize(boost::extents[ncy][ncx]);
+    this->rho.resize(boost::extents[ncy][ncx]);
     for (int i=0; i < ncy; i++){
         for (int j=0; j < ncx; j++){
             T[i][j] = T_init;
+            rho[i][j] = density;
+            u[i][j] = vel_init;
         }
     }
 }

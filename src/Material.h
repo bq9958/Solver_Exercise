@@ -15,6 +15,8 @@ class Material
         ~Material();
 
         inline boost::multi_array<fp,2> getT() {return T;}
+        inline boost::multi_array<fp,2> getrho() {return rho;}
+        inline boost::multi_array<fp,2> getU() {return u;}
 
         void updateField(unsigned int i, unsigned int j, fp Tnew) { this->T[i][j] = Tnew; }
 
@@ -23,5 +25,7 @@ class Material
     private: 
         fp k;
         boost::multi_array<fp,2> T;
+        boost::multi_array<fp,2> rho;
+        boost::multi_array<fp,2> u; // 考虑一维情况
 };
 #endif
