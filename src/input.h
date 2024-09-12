@@ -46,12 +46,25 @@ typedef struct BoundaryCondition
     fp heatflux;
 } BC;
 
-const BC BoundaryInfo[4]{
+
+const BC BoundaryInfo[4]
+{
     {X_MIN, DIRICHLET, 373.0, 0.0},
     {X_MAX, DIRICHLET, 373.0, 0.0},
-    {Y_MIN, DIRICHLET, 373.0, 0.0},
-    {Y_MAX, DIRICHLET, 293.0, 0.0},
-};
+    {Y_MIN, NEUMANN, 0.0, 0.0},
+    {Y_MAX, NEUMANN, 0.0, 0.0},
+};       
+
+// const BC BoundaryInfo[4]
+// {
+//     {X_MIN, DIRICHLET, 373.0, 0.0},
+//     {X_MAX, DIRICHLET, 373.0, 0.0},
+//     {Y_MIN, DIRICHLET, 373.0, 0.0},
+//     {Y_MAX, DIRICHLET, 293.0, 0.0},
+// };
+
+
+
 
 
 
