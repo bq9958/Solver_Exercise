@@ -34,7 +34,7 @@ class StructuredMesh
         std::array<fp, ncx> xc;   // cell center
         std::array<fp, ncy> yc;   // cell center
         std::array<fp, ncx+1> xf;   // face
-        std::array<fp, ncx+1> yf;   // face
+        std::array<fp, ncy+1> yf;   // face
         boost::multi_array<struct CELL_FACE, 2> cellFacesID;
 };
 

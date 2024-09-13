@@ -6,8 +6,8 @@
 
 int main(){
     StructuredMesh mesh;
-    CoeffMatrix coeffmatrix(mesh);
     Material material;
+    CoeffMatrix coeffmatrix(mesh,material);
 
     fp dx = mesh.getdx();
     fp dy = mesh.getdy();

@@ -22,7 +22,7 @@ class CoeffMatrix {
 
         void convectionCoeff();
 
-        inline std::array<std::array<COEFF,ncy>,ncy>getCoeff() {return this->Coeff;} 
+        inline std::array<std::array<COEFF,ncx>,ncy>getCoeff() {return this->Coeff;} 
     private:
     std::array<std::array<COEFF,ncx>,ncy> Coeff;
     StructuredMesh& mesh;

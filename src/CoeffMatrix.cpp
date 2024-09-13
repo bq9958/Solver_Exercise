@@ -76,36 +76,60 @@ void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy
             pos = cellFacesID[i][j].EAST;
             for (int item=0; item < sizeof(BoundaryInfo)/sizeof(BoundaryInfo[0]); item++){
                 if (pos == BoundaryInfo[item].position){
-                    Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].ae - 2*Coeff[i][j].ae; 
-                    Coeff[i][j].bsrc -= 2*Coeff[i][j].ae*BoundaryInfo[item].T;
-                    Coeff[i][j].ae = 0.0;
+                    if (BoundaryInfo[item].BC_T == DIRICHLET){
+                        Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].ae - 2*Coeff[i][j].ae; 
+                        Coeff[i][j].bsrc -= 2*Coeff[i][j].ae*BoundaryInfo[item].T;
+                        Coeff[i][j].ae = 0.0;
+                    }
+                    else if(BoundaryInfo[item].BC_T == NEUMANN){
+                        Coeff[i][j].ac = -(Coeff[i][j].aw + Coeff[i][j].an + Coeff[i][j].as);
+                        Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dy;
+                    }
                 }
             }
 
             pos = cellFacesID[i][j].WEST;
             for (int item=0; item < sizeof(BoundaryInfo)/sizeof(BoundaryInfo[0]); item++){
                 if (pos == BoundaryInfo[item].position){
-                    Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].aw - 2*Coeff[i][j].aw; 
-                    Coeff[i][j].bsrc -= 2*Coeff[i][j].aw*BoundaryInfo[item].T;
-                    Coeff[i][j].aw = 0.0;
+                    if (BoundaryInfo[item].BC_T == DIRICHLET){
+                        Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].aw - 2*Coeff[i][j].aw; 
+                        Coeff[i][j].bsrc -= 2*Coeff[i][j].aw*BoundaryInfo[item].T;
+                        Coeff[i][j].aw = 0.0;
+                    }
+                    else if (BoundaryInfo[item].BC_T == NEUMANN){
+                        Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].an + Coeff[i][j].as);
+                        Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dy;
+                    }
                 }
             }
 
             pos = cellFacesID[i][j].SOUTH;
             for (int item=0; item < sizeof(BoundaryInfo)/sizeof(BoundaryInfo[0]); item++){
                 if (pos == BoundaryInfo[item].position){
-                    Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].as - 2*Coeff[i][j].as; 
-                    Coeff[i][j].bsrc -= 2*Coeff[i][j].as*BoundaryInfo[item].T;
-                    Coeff[i][j].as = 0.0;
+                    if (BoundaryInfo[item].BC_T == DIRICHLET){
+                        Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].as - 2*Coeff[i][j].as; 
+                        Coeff[i][j].bsrc -= 2*Coeff[i][j].as*BoundaryInfo[item].T;
+                        Coeff[i][j].as = 0.0;
+                    }
+                    else if (BoundaryInfo[item].BC_T == NEUMANN){
+                        Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].an + Coeff[i][j].ae);
+                        Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dx;
+                    }
                 }
             }
 
             pos = cellFacesID[i][j].NORTH;
             for (int item=0; item < sizeof(BoundaryInfo)/sizeof(BoundaryInfo[0]); item++){
                 if (pos == BoundaryInfo[item].position){
-                    Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].an - 2*Coeff[i][j].an; 
-                    Coeff[i][j].bsrc -= 2*Coeff[i][j].an*BoundaryInfo[item].T;
-                    Coeff[i][j].an = 0.0;
+                    if (BoundaryInfo[item].BC_T == DIRICHLET){
+                        Coeff[i][j].ac = Coeff[i][j].ac + Coeff[i][j].an - 2*Coeff[i][j].an; 
+                        Coeff[i][j].bsrc -= 2*Coeff[i][j].an*BoundaryInfo[item].T;
+                        Coeff[i][j].an = 0.0;
+                    }
+                    else if (BoundaryInfo[item].BC_T == NEUMANN){
+                        Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].as + Coeff[i][j].ae);
+                        Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dx;
+                    }
                 }
             }                        
         }
