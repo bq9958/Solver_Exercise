@@ -1,6 +1,6 @@
 # 编译器和编译器标志
 CXX = g++                      # 使用的编译器
-CXXFLAGS = -std=c++11 -g     # 编译选项，启用 C++11 标准并显示所有警告
+CXXFLAGS = -DPRINT_DEBUG -std=c++11 -g     # 编译选项，启用 C++11 标准并显示所有警告
 
 # 项目名称（生成的可执行文件名称）
 TARGET = Test
