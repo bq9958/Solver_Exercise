@@ -2,7 +2,7 @@
 
 fp L2norm(const boost::multi_array<fp,2>& newField, const boost::multi_array<fp,2>& oldField)
 {
-    fp deviation = 0.0, result = 0.0;
+    fp deviation = fp(0.0), result = fp(0.0);
     for(unsigned int j = 0; j < oldField.shape()[1]; ++j)
         for(unsigned int i = 0; i < oldField.shape()[0]; ++i)
         {

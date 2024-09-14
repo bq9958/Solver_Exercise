@@ -20,7 +20,7 @@ const fp ymax = 1.0;
 const fp conductivity = 0.1;  // 导热系数
 const fp density = 1.0;  // 密度
 const fp vel_init = -1.0; // 流场初始速度
-const fp T_init = fp(0.5);
+const fp T_init = fp(373);
 
 // 求解器参数 
 const int nNonLinIter = 100;

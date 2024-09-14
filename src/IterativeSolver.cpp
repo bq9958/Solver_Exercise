@@ -69,7 +69,7 @@ fp IterativeSolver::solve()
             this->ntotal_iter += l_iter;
             std::cout << std::endl;
             this->printResidual();
-            break;
+            return this->norm2;
         }
     }
     return this->norm2;
