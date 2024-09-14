@@ -33,7 +33,8 @@ fp IterativeSolver::jacobi()
             if (i==Told.size()-1) TN = 0;
             else TN = Told[i+1][j];
 
-            fp T_new = -coeff[i][j].ae*TE - coeff[i][j].aw*TW - coeff[i][j].as*TS - coeff[i][j].an*TN + coeff[i][j].bsrc;
+            fp T_new = -coeff[i][j].ae*TE - coeff[i][j].aw*TW - coeff[i][j].as*TS \
+                                    - coeff[i][j].an*TN + coeff[i][j].bsrc;
             T_new = T_new / coeff[i][j].ac;
             material.updateField(i, j, T_new);
         }
@@ -61,7 +62,7 @@ fp IterativeSolver::solve()
         if (this->l_iter==1){
             this->norm2_init = this->norm2;
         }
-        this->norm2_max = std::max(this->norm2, this->norm2_max);
+        this->norm2_max = std::max(this->norm2, this->norm2_max) + 1.0E-20;
         this->residual = this->norm2 / this->norm2_max;
 
         if (this->residual < linearResLimit || this->l_iter==nLinearIter){

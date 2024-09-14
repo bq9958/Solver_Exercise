@@ -6,6 +6,7 @@
 #include "input.h"
 #include "StructuredMesh.h"
 #include "Material.h"
+#include "debug_macro.h"
 
 struct COEFF {
     fp ac, ae, aw, as, an, bsrc;
@@ -18,9 +19,9 @@ class CoeffMatrix {
 
         ~CoeffMatrix();
 
-        void DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy);
+        void DiffusionCoeff(fp dx, fp dy);
 
-        void convectionCoeff();
+        void convectionCoeff(fp dx, fp dy);
 
         inline std::array<std::array<COEFF,ncx>,ncy>getCoeff() {return this->Coeff;} 
     private:

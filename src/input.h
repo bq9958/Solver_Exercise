@@ -7,10 +7,12 @@
 #include <string>
 
 // 网格参数
-const int ncx = 3; 
-const int ncy = 1;
-const fp xmin = fp(-0.5/(ncx-1));
-const fp xmax = fp(1.0+0.5/(ncx-1));
+const int ncx = 32; 
+const int ncy = 32;
+const fp xmin = 0.0;
+const fp xmax = 1.0;
+// const fp xmin = fp(-0.5/(ncx-1));
+// const fp xmax = fp(1.0+0.5/(ncx-1));
 const fp ymin = 0.0;
 const fp ymax = 1.0;
 
@@ -18,7 +20,7 @@ const fp ymax = 1.0;
 const fp conductivity = 0.1;  // 导热系数
 const fp density = 1.0;  // 密度
 const fp vel_init = -1.0; // 流场初始速度
-const fp T_init = 373.0;
+const fp T_init = fp(0.5);
 
 // 求解器参数 
 const int nNonLinIter = 100;
@@ -48,21 +50,21 @@ typedef struct BoundaryCondition
 } BC;
 
 
+// const BC BoundaryInfo[4]
+// {
+//     {X_MIN, DIRICHLET, 0.0, 0.0},
+//     {X_MAX, DIRICHLET, 1.0, 0.0},
+//     {Y_MIN, NEUMANN, 0.0, 0.0},
+//     {Y_MAX, NEUMANN, 0.0, 0.0},
+// };       
+
 const BC BoundaryInfo[4]
 {
     {X_MIN, DIRICHLET, 373.0, 0.0},
     {X_MAX, DIRICHLET, 373.0, 0.0},
-    {Y_MIN, NEUMANN, 0.0, 0.0},
-    {Y_MAX, NEUMANN, 0.0, 0.0},
-};       
-
-// const BC BoundaryInfo[4]
-// {
-//     {X_MIN, DIRICHLET, 373.0, 0.0},
-//     {X_MAX, DIRICHLET, 373.0, 0.0},
-//     {Y_MIN, DIRICHLET, 373.0, 0.0},
-//     {Y_MAX, DIRICHLET, 293.0, 0.0},
-// };
+    {Y_MIN, DIRICHLET, 373.0, 0.0},
+    {Y_MAX, DIRICHLET, 293.0, 0.0},
+};
 
 
 

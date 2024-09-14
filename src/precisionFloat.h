@@ -2,6 +2,6 @@
 #define PRECISIONFLOAT_H
 
 // float精度为32位
-typedef double fp;
+typedef float fp;
 
 #endif

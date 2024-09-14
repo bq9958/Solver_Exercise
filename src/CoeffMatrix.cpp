@@ -17,20 +17,22 @@ CoeffMatrix::CoeffMatrix(StructuredMesh& mesh, Material& material):
 
 CoeffMatrix::~CoeffMatrix(){}
 
-void CoeffMatrix::convectionCoeff()
+void CoeffMatrix::convectionCoeff(fp dx, fp dy)
 {
     // Central difference
     boost::multi_array<fp,2> u = material.getU();
     boost::multi_array<fp,2> rho = material.getrho();
+    u.resize(boost::extents[ncy][ncx]);
+    rho.resize(boost::extents[ncy][ncx]);
     for (int i=0; i<ncy; i++){
         for (int j=0; j<ncx; j++){
-            fp ue = (u[i][j]+u[i][j+1])/fp(2.0);
-            fp uw = (u[i][j]+u[i][j-1])/fp(2.0);
-            fp rhoe = (rho[i][j]+rho[i][j+1])/fp(2.0);
-            fp rhow = (rho[i][j]+rho[i][j-1])/fp(2.0);
-            Coeff[i][j].ae += rhoe*ue/fp(2.0);
-            Coeff[i][j].aw += rhow*uw/fp(2.0);
-            Coeff[i][j].ac += -(Coeff[i][j].ae+Coeff[i][j].aw);
+            fp ue = vel_init;
+            fp uw = vel_init;
+            fp rhoe = density;
+            fp rhow = density;
+            Coeff[i][j].ae += rhoe*ue*dy/fp(2.0);
+            Coeff[i][j].aw += -rhow*uw*dy/fp(2.0);
+            Coeff[i][j].ac += rhoe*ue*dy/fp(2.0) - rhow*uw*dy/fp(2.0);
         }
     }
 
@@ -57,7 +59,7 @@ void CoeffMatrix::convectionCoeff()
     }
 }
 
-void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy){
+void CoeffMatrix::DiffusionCoeff(fp dx, fp dy){
     for (int i=0; i<ncy; i++){
         for (int j=0; j<ncx; j++){
             Coeff[i][j].ae += -conductivity*dy/dx;
@@ -84,6 +86,7 @@ void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy
                     else if(BoundaryInfo[item].BC_T == NEUMANN){
                         Coeff[i][j].ac = -(Coeff[i][j].aw + Coeff[i][j].an + Coeff[i][j].as);
                         Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dy;
+                        Coeff[i][j].ae = 0.0;
                     }
                 }
             }
@@ -99,6 +102,7 @@ void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy
                     else if (BoundaryInfo[item].BC_T == NEUMANN){
                         Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].an + Coeff[i][j].as);
                         Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dy;
+                        Coeff[i][j].aw = 0.0;
                     }
                 }
             }
@@ -114,6 +118,7 @@ void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy
                     else if (BoundaryInfo[item].BC_T == NEUMANN){
                         Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].an + Coeff[i][j].ae);
                         Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dx;
+                        Coeff[i][j].as = 0.0;
                     }
                 }
             }
@@ -129,18 +134,18 @@ void CoeffMatrix::DiffusionCoeff(fp conductivity, fp dx, fp dy, int ncx, int ncy
                     else if (BoundaryInfo[item].BC_T == NEUMANN){
                         Coeff[i][j].ac = -(Coeff[i][j].ae + Coeff[i][j].as + Coeff[i][j].ae);
                         Coeff[i][j].bsrc -= BoundaryInfo[item].heatflux*dx;
+                        Coeff[i][j].an = 0.0;
                     }
                 }
             }                        
         }
     }
     
-    //print 
+    // print 
     // std::cout << "Coefficient matrix has been created" << std::endl;
     // for (int i=0; i<ncy; i++){
     //     for (int j=0; j<ncx; j++){
-    //         std::cout << std::setw(6) << Coeff[i][j].bsrc ;
+    //         std::cout << std::setw(6) << Coeff[i][j].bsrc << std::endl ;
     //     }
-    //     std::cout << std::endl;
     // }
 }
